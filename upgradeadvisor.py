@@ -1996,6 +1996,9 @@ else:
     selected_room_type_name = "Standard"
     selected_room_type = None
 
+# Definisci total_rooms con valore predefinito
+total_rooms = 85  # Valore predefinito per Cala Cuncheddi
+
 # Parametri di base
 with st.sidebar.expander("Parametri di Base", expanded=True):
     # Se abbiamo un hotel e una tipologia selezionati, usa i valori configurati
@@ -2010,9 +2013,13 @@ with st.sidebar.expander("Parametri di Base", expanded=True):
         # Parametri inventario direttamente dalla configurazione salvata
         is_entry_level = selected_room_type.get('is_entry_level', False)
         rooms_in_type = selected_room_type.get('rooms_in_type', 20)
+        # Ottieni total_rooms dall'hotel selezionato
+        if selected_hotel:
+            total_rooms = selected_hotel.get('total_rooms', 85)
+            
         st.write(f"**Camere in questa tipologia:** {rooms_in_type}")
         st.write(f"**Tipologia entry-level:** {'Sì' if is_entry_level else 'No'}")
-        st.write(f"**Totale camere hotel:** {selected_hotel.get('total_rooms', 0)}")
+        st.write(f"**Totale camere hotel:** {total_rooms}")
     else:
         # Valori di default
         adr = st.number_input("ADR Medio (€)", min_value=50.0, max_value=1000.0, value=300.0, step=5.0)
